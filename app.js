@@ -12,14 +12,16 @@ const app = express();
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/customer', async (req, res) => {
-    await Customer.deleteMany({});
-    const customer = new Customer({
-        name: 'Tanush'
-    })
-    await customer.save();
     const post = await Customer.find({});
     res.send(post)
     // res.redirect(`/orders/${customer._id}`)
+})
+
+app.post('/customer', async (req, res) => {
+    const customer = new Customer({
+        name: req.body.name
+    })
+    await customer.save();
 })
 
 app.get('/orders/:id', async (req, res) => {
